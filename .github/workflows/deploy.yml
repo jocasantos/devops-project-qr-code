@@ -27,8 +27,8 @@ jobs:
   
         - name: Build and Push Front-End
           run: |
-            docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ env.IMAGE_VERSION }} ./frontend
-            docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ env.IMAGE_VERSION }}
+            docker build -t ${{ secrets.DOCKER_USERNAME }}/front-end-nextjs:${{ env.IMAGE_VERSION }} ./front-end-nextjs
+            docker push ${{ secrets.DOCKER_USERNAME }}/front-end-nextjs:${{ env.IMAGE_VERSION }}
     
         - name: Build and Push API
           run: |

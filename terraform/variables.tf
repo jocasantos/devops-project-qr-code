@@ -22,6 +22,14 @@ variable "private_subnets" {
   default     = ["172.16.3.0/24", "172.16.4.0/24"]
 }
 
+variable "bucket_name" {
+  description = "The name of the S3 bucket"
+  type        = string
+  default = "qr-codes-storage-bucket-jocasantos"
+}
+
+
+
 /* variable "ami" {
   description = "AMI ID for the EC2 instance"
   default = "ami-09a9858973b288bdd"

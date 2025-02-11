@@ -1,0 +1,30 @@
+tasks:
+  - name: Install utilities
+    before: |
+      sudo apt-get update -y && sudo apt-get install -y tree
+  - name: Install Terraform & AWS CLI
+    init: |
+      # Install Terraform
+      wget -q https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+      unzip -qq terraform_1.6.6_linux_amd64.zip
+      sudo mv terraform /usr/local/bin/
+      rm terraform_1.6.6_linux_amd64.zip
+
+      # Install AWS CLI
+      curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip -qq awscliv2.zip
+      sudo ./aws/install
+      rm -rf aws awscliv2.zip
+
+      # Clean up unnecessary files
+      sudo apt-get clean
+      sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+      # Verify installations
+      terraform --version
+      aws --version
+
+vscode:
+  extensions:
+    - hashicorp.terraform
+    - amazonwebservices.aws-toolkit-vscode

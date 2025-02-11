@@ -1,7 +1,28 @@
 #!/bin/bash
-sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
-wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update
-sudo apt-get install terraform
+
+# Set the desired version of Terraform
+TERRAFORM_VERSION="1.10.5"
+
+# Set the architecture (x86_64 is default for most systems)
+ARCHITECTURE="amd64"
+
+# Download the Terraform zip package
+echo "Downloading Terraform version ${TERRAFORM_VERSION}..."
+curl -LO "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${ARCHITECTURE}.zip"
+
+# Unzip the downloaded package
+echo "Unzipping Terraform..."
+unzip -qq terraform_${TERRAFORM_VERSION}_linux_${ARCHITECTURE}.zip
+
+# Move the Terraform binary to /usr/local/bin
+echo "Moving Terraform to /usr/local/bin..."
+sudo mv terraform /usr/local/bin/
+
+# Clean up the downloaded zip file
+rm terraform_${TERRAFORM_VERSION}_linux_${ARCHITECTURE}.zip
+
+# Verify the installation
+echo "Verifying Terraform installation..."
+terraform --version
+
+echo "Terraform installation completed!"

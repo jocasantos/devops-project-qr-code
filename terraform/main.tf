@@ -9,3 +9,9 @@ module "s3" {
   source     = "./modules/s3"
   bucket_name = var.bucket_name
 }
+
+module "eks" {
+  source      = "./modules/eks"
+  vpc_id      = module.vpc.vpc_id
+  subnet_ids = var.private_subnets
+}

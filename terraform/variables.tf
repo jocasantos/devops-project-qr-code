@@ -28,6 +28,12 @@ variable "bucket_name" {
   default = "qr-codes-storage-bucket-jocasantos"
 }
 
+variable "cluster_name" {
+  description = "The name of the cluster"
+  default = "qr-project-cluster"
+  type        = string
+}
+
 
 
 /* variable "ami" {

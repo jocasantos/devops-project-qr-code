@@ -11,6 +11,7 @@ module "s3" {
 }
 
 module "eks" {
+  cluster_name = var.cluster_name
   source      = "./modules/eks"
   vpc_id      = module.vpc.vpc_id
   subnet_ids = var.private_subnets

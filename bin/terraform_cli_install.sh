@@ -7,12 +7,12 @@ TERRAFORM_VERSION="1.10.5"
 ARCHITECTURE="amd64"
 
 # Download the Terraform zip package
+cd /workspace/devops-project-qr-code/terraform
 echo "Downloading Terraform version ${TERRAFORM_VERSION}..."
 curl -LO "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${ARCHITECTURE}.zip"
 
 # Unzip the downloaded package
 echo "Unzipping Terraform..."
-cd /workspace/devops-project-qr-code/terraform
 unzip -qq terraform_${TERRAFORM_VERSION}_linux_${ARCHITECTURE}.zip
 
 # Move the Terraform binary to /usr/local/bin

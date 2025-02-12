@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: qr-code
+  labels:
+    app: frontend
+spec:
+  replicas: 2  # Number of frontend pods
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: jocasantos/front-end-nextjs:5 # Replace with your image
+        ports:
+        - containerPort: 3000  # Assuming your frontend runs on port 3000

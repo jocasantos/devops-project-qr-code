@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: front-end-ingress
+  namespace: qr-code  # Ensure this matches your namespace
+  annotations:
+    kubernetes.io/ingress.class: alb  # Use ALB Ingress Controller
+    alb.ingress.kubernetes.io/scheme: internet-facing  # Make the ALB internet-facing
+    alb.ingress.kubernetes.io/target-type: ip  # Target by IP
+    alb.ingress.kubernetes.io/healthcheck-path: / # Optional: Set up health check for the ALB
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: front-end-service  # Name of the service exposing the front end
+                port:
+                  number: 80  # The service port

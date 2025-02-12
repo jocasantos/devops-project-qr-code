@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end-service
+  namespace: qr-code  # Ensure this matches your namespace
+spec:
+  selector:
+    app: frontend  # Ensure this matches the label of your pods
+  ports:
+    - protocol: TCP
+      port: 80  # Exposing on port 80 (ALB will forward traffic here)
+      targetPort: 3000  # Container's exposed port
+  type: ClusterIP  # Using ClusterIP as it's internal to the cluster

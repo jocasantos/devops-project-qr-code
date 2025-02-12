@@ -12,6 +12,7 @@ curl -LO "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terrafor
 
 # Unzip the downloaded package
 echo "Unzipping Terraform..."
+cd /workspace/devops-project-qr-code/terraform
 unzip -qq terraform_${TERRAFORM_VERSION}_linux_${ARCHITECTURE}.zip
 
 # Move the Terraform binary to /usr/local/bin

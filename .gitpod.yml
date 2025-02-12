@@ -3,6 +3,18 @@ tasks:
     before: |
       sudo apt-get install tree
 
+  - name: kubectl
+    before: |
+      ./bin/kubectl_install.sh
+
+  - name: eksctl
+    before: |
+      ./bin/eksctl_install.sh      
+
+  - name: helm
+    before: |
+      ./bin/get_helm.sh
+
   - name: terraform
     before: |
       ./bin/terraform_cli_install.sh

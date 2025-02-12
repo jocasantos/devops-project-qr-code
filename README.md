@@ -26,3 +26,9 @@ docker run
 - Create a deploy-example.yml file in .github > workflows folder
 - First add the DockerHub credentials to the repository secrets in GitHub console or by GitHub CLI
 - Write the first part of the pipeline (CI) and test it. I created mine with simple versioning tag for the front-end and api images.
+
+### Create a EKS Cluster
+1. Prerequisites:
+  - kubectl
+  - eksctl
+  - helm

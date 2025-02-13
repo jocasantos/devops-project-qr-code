@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  namespace: qr-code
+  annotations:
+    kubernetes.io/ingress.class: alb  # Use AWS ALB Ingress Controller
+    alb.ingress.kubernetes.io/scheme: internal  # Internal ALB (not exposed to the internet)
+    alb.ingress.kubernetes.io/target-type: ip  # Targets Kubernetes pods directly
+    alb.ingress.kubernetes.io/healthcheck-path: /  # Health check path for ALB
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /  # API is available at "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service  # Name of your API service
+                port:
+                  number: 80  # This should match the service port

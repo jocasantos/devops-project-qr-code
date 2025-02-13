@@ -109,7 +109,7 @@ eksctl create iamserviceaccount \
 ```
 
 ### Deploy your app
-- Apply your deployments.yml, services.yml and ingress.yml files for the front-end and api
+- Apply your deployments.yml, services.yml and ingresses.yml files for the front-end and api
 
 ### ALB Configuration
 - Download IAM policy

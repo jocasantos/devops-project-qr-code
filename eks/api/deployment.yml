@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: qr-code
+  labels:
+    app: api
+spec:
+  replicas: 2  # Number of API pods
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      serviceAccountName: s3-access-sa  # Attach IAM role for S3 access
+      containers:
+      - name: api
+        image: jocasantos/api:8  # Replace with your image
+        ports:
+        - containerPort: 8000  # Assuming your API runs on port 8000
+        env:
+        - name: S3_BUCKET
+          value: qr-code-bucket-jocasantos  # Replace with your S3 bucket name if needed

@@ -21,6 +21,14 @@ docker run
 ```
 > Open 0.0.0.0:8000 on your browser and you should see a established connection.
 
+### Create your storage (S3 bucket) and configure API accordingly
+- You can use my terraform config or just create by the cli/console.
+- Replace in your api folder > main.py > bucket_name = os.getenv("S3_BUCKET") 
+> This will get the bucket name from the environment variables
+- Replace in your api folder > main.py > s3 = boto3.client('s3')
+- Delete the .env file 
+> I don't need to specify my aws credentials since I'm using EKS (roles based permissions)
+
 ### Create your CI/CD pipeline and configure the CI part (build and push Docker images to a repository)
 - I used GitHub Actions and DockerHub
 - Create a deploy-example.yml file in .github > workflows folder
@@ -54,7 +62,10 @@ eksctl create fargateprofile \
 ```
 > Note: This command will create a namespace called qr-code besides the fargate profile.
 
-6. Configure IAM OIDC provider:
+6. Create the namespace
+`kubectl create namespace qr-code`
+
+7. Configure IAM OIDC provider:
   `export cluster_name=qr-code-cluster`
   `oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)`
   - Check if there is an IAM OIDC provider configured already
@@ -62,9 +73,43 @@ eksctl create fargateprofile \
   - If not, run the below command
   `eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve`
 
+### Create the IAM Role for pod communication with s3
+- Create an IAM policy (read and write for s3)
+```
+aws iam create-policy --policy-name S3ReadWritePolicy \
+  --description "Allow read and write access to S3" \
+  --policy-document '{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:PutObject",
+          "s3:DeleteObject"
+        ],
+        "Resource": [
+          "arn:aws:s3:::<your-bucket-name>", 
+          "arn:aws:s3:::<your-bucket-name>/*"
+        ]
+      }
+    ]
+  }'
+```
+
+- Create an IAM Role
+```
+eksctl create iamserviceaccount \
+  --name s3-access-sa \
+  --namespace qr-code \
+  --cluster qr-code-cluster \
+  --attach-policy-arn=arn:aws:iam::<your-aws-account-id>:policy/S3ReadWritePolicy \
+  --approve
+```
+
 ### Deploy your app
-- 
-- 
+- Apply your deployments.yml, services.yml and ingress.yml files for the front-end and api
 
 ### ALB Configuration
 - Download IAM policy
@@ -110,6 +155,8 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
 ```
 kubectl get deployment -n kube-system aws-load-balancer-controller
 ```
+> Can take a minute to deploy your alb
+
 - Get the Ingress adress and check it on your browser!
 `kubectl get ingress -n qr-code`
 

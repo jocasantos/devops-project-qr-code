@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     paths:
-      - 'frontend/**'
+      - 'front-end/**'
       - 'api/**'
 
 jobs:

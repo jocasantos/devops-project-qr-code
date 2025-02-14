@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: jocasantos/front-end-nextjs:13 # Replace with your image
+        image: jocasantos/front-end-nextjs:14 # Replace with your image
         ports:
         - containerPort: 3000  # Assuming your frontend runs on port 3000

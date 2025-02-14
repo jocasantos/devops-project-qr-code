@@ -6,8 +6,8 @@ import os
 from io import BytesIO
 
 # Loading Environment variable (AWS Access Key and Secret Key)
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 app = FastAPI()
 
@@ -26,7 +26,8 @@ app.add_middleware(
 # AWS S3 Configuration
 s3 = boto3.client('s3')
 
-bucket_name = os.getenv("S3_BUCKET")
+# bucket_name = os.getenv("S3_BUCKET")
+bucket_name = "qr-code-bucket-jocasantos"
 
 @app.post("/generate-qr/")
 async def generate_qr(url: str):

@@ -21,6 +21,6 @@ spec:
         image: jocasantos/api:13  # Replace with your image
         ports:
         - containerPort: 8000  # Assuming your API runs on port 8000
-        env:
-        - name: S3_BUCKET
-          value: qr-code-bucket-jocasantos  # Replace with your S3 bucket name if needed
+        # env:
+        # - name: S3_BUCKET
+          # value: qr-code-bucket-jocasantos  # Replace with your S3 bucket name if needed

@@ -10,7 +10,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://api-service/generate-qr/?url=${url}`);
+      const response = await axios.post(`http://internal-k8s-qrcode-apiingre-efb9929ebc-514930940.eu-north-1.elb.amazonaws.com/generate-qr/?url=${url}`);
       setQrCodeUrl(response.data.qr_code_url);
     } catch (error) {
       console.error('Error generating QR Code:', error);
